@@ -1,6 +1,7 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const fs = require('fs'); 
+const path = require('path');
 // 📦 Importation de la documentation depuis le fichier externe
 const { DOCUMENTATION_BOT } = require('./documentation');
 
@@ -38,10 +39,9 @@ async function extraireMetaDonnees(url) {
     } catch (e) { return null; }
 }
 
-console.log("⚡ Démarrage de Christian CM (Version Production GitHub)...");
+console.log("⚡ Démarrage de Christian CM (Version Stable Render & Couplage)...");
 
-const path = require('path');
-
+// 🌐 CONFIGURATION DYNAMIQUE DU CHEMIN CHROME POUR RENDER
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
@@ -52,19 +52,26 @@ const client = new Client({
             '--disable-dev-shm-usage', 
             '--disable-gpu'
         ],
-        // 🚀 Recherche dynamique dans le dossier .cache inclus dans le projet transféré
+        // Pointe dynamiquement vers l'emplacement préservé par la commande de copie
         executablePath: path.join(__dirname, '.cache', 'puppeteer', 'chrome', 'linux-146.0.7680.31', 'chrome-linux64', 'chrome')
     }
 });
 
+// 🔑 AFFICHAGE ULTRA-VISIBLE DU CODE À 8 CHIFFRES DANS LES LOGS
 client.on('qr', async (qr) => {
     try {
-        // Option alternative : Génère aussi le QR Code dans les logs du serveur au cas où le code de couplage échoue
+        // Option de secours : Génère quand même le QR code visuel en texte dans la console
         qrcode.generate(qr, { small: true });
         
+        // Demande le code de jumelage textuel officiel
         const code = await client.requestPairingCode(NUMERO_SUPPORT);
-        console.log(`\n👉 CODE DE CONNEXION WHATSAPP BUSINESS : ${code.toUpperCase()}\n`);
-    } catch (err) { console.error(err); }
+        
+        console.log("\n========================================================");
+        console.log(`🔑 TON CODE DE CONNEXION WHATSAPP : ${code.toUpperCase()}`);
+        console.log("========================================================\n");
+    } catch (err) { 
+        console.error("Erreur d'obtention du code de couplage :", err); 
+    }
 });
 
 client.on('ready', () => {
@@ -75,7 +82,7 @@ client.on('message', async msg => {
     const chat = await msg.getChat();
     if (chat.isGroup) return;
 
-    // 🛑 1. REJET AUTOMATIQUE DES MÉDIAS (Le bot ignore sans répondre)
+    // 🛑 1. REJET AUTOMATIQUE DES MÉDIAS
     if (msg.hasMedia) {
         console.log(`🚫 Média reçu de ${chat.name || msg.from} -> Ignoré.`);
         return; 
@@ -84,7 +91,6 @@ client.on('message', async msg => {
     const idClient = msg.from;
     const texte = msg.body.toLowerCase().trim();
 
-    // 📥 Initialisation ou chargement du profil dans le stockage intelligent
     if (!memoireClients[idClient]) {
         memoireClients[idClient] = {
             nom: chat.name || "Client Goma",
@@ -101,7 +107,7 @@ client.on('message', async msg => {
     try {
         let reponseText = "";
 
-        // 🎯 2. FILTRAGE STRICT DES LIENS (AUTORISÉS UNIQUEMENT)
+        // 🎯 2. FILTRAGE STRICT DES LIENS
         const regexUrl = /https?:\/\/[^\s]+/i;
         const urlTrouvee = msg.body.match(regexUrl);
 
