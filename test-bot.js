@@ -50,8 +50,9 @@ const client = new Client({
             '--disable-setuid-sandbox', 
             '--disable-dev-shm-usage', 
             '--disable-gpu'
-        ]
-        // 🚀 On supprime complètement la ligne executablePath !
+        ],
+        // 🚀 C'est le chemin universel de Chrome sur les machines Linux de production
+        executablePath: '/usr/bin/google-chrome-stable'
     }
 });
 
