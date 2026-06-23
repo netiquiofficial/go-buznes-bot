@@ -57,20 +57,25 @@ const client = new Client({
     }
 });
 
-// 🔑 AFFICHAGE ULTRA-VISIBLE DU CODE À 8 CHIFFRES DANS LES LOGS
+// 🔑 AFFICHAGE SÉCURISÉ DU CODE À 8 CHIFFRES AVEC TEMPORISATION
 client.on('qr', async (qr) => {
     try {
-        // Option de secours : Génère quand même le QR code visuel en texte dans la console
+        // 1. Affiche le QR code en texte dans la console par sécurité
         qrcode.generate(qr, { small: true });
         
-        // Demande le code de jumelage textuel officiel
+        console.log("\n⏳ Attente de l'initialisation complète des modules WhatsApp (10s)...");
+        
+        // 2. Force le script à attendre 10 secondes que la page soit prête
+        await new Promise(resolve => setTimeout(resolve, 10000));
+        
+        // 3. Demande le code de jumelage textuel
         const code = await client.requestPairingCode(NUMERO_SUPPORT);
         
         console.log("\n========================================================");
         console.log(`🔑 TON CODE DE CONNEXION WHATSAPP : ${code.toUpperCase()}`);
         console.log("========================================================\n");
     } catch (err) { 
-        console.error("Erreur d'obtention du code de couplage :", err); 
+        console.error("Le module WhatsApp n'était pas encore prêt, nouvelle tentative au prochain cycle..."); 
     }
 });
 
