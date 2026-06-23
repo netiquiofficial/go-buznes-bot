@@ -50,8 +50,8 @@ const client = new Client({
             '--disable-dev-shm-usage', 
             '--disable-gpu'
         ],
-        // 🚀 Chemin local généré par la commande de build automatique
-        executablePath: './.cache/puppeteer/chrome/linux-146.0.7680.31/chrome-linux64/chrome'
+        // 🚀 Chemin absolu exact affiché par tes logs de build Render
+        executablePath: '/opt/render/.cache/puppeteer/chrome/linux-146.0.7680.31/chrome-linux64/chrome'
     }
 });
 
