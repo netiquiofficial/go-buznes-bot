@@ -40,18 +40,19 @@ async function extraireMetaDonnees(url) {
 
 console.log("⚡ Démarrage de Christian CM (Version Production GitHub)...");
 
-// 🌐 CONFIGURATION DE PUPPETEER COMPATIBLE LINUX (RENDER) ET WINDOWS
+// 🌐 CONFIGURATION DE PRODUCTION AUTO-DÉTECTÉE POUR RENDER
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-        headless: true, // Requis pour les serveurs sans écran comme Render
+        headless: true,
         args: [
             '--no-sandbox', 
             '--disable-setuid-sandbox', 
             '--disable-dev-shm-usage', 
             '--disable-gpu'
-        ]
-        // 🚀 "executablePath" a été retiré pour que le serveur utilise son propre Chrome Linux
+        ],
+        // 🚀 On force le script à pointer vers le dossier de cache de Render
+        executablePath: '/opt/render/.cache/puppeteer/chrome/linux-146.0.7680.31/chrome-linux64/chrome'
     }
 });
 
