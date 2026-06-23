@@ -40,7 +40,6 @@ async function extraireMetaDonnees(url) {
 
 console.log("⚡ Démarrage de Christian CM (Version Production GitHub)...");
 
-// 🌐 CONFIGURATION NETTOYÉE POUR RENDER
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
@@ -51,8 +50,8 @@ const client = new Client({
             '--disable-dev-shm-usage', 
             '--disable-gpu'
         ],
-        // 🚀 C'est le chemin universel de Chrome sur les machines Linux de production
-        executablePath: '/usr/bin/google-chrome-stable'
+        // 🚀 Chemin local généré par la commande de build automatique
+        executablePath: './.cache/puppeteer/chrome/linux-146.0.7680.31/chrome-linux64/chrome'
     }
 });
 
