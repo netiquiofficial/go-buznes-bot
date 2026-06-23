@@ -4,6 +4,7 @@
   "description": "Assistant commercial intelligent pour Go Buznes et Netiqui à Goma",
   "main": "test-bot.js",
   "scripts": {
+    "build": "npm install && npx puppeteer browsers install chrome",
     "start": "node test-bot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
