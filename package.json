@@ -1,13 +1,24 @@
 {
   "name": "go-buznes-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Assistant commercial intelligent pour Go Buznes et Netiqui à Goma",
   "main": "index.js",
   "scripts": {
+    "start": "node test-bot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "whatsapp",
+    "bot",
+    "go-buznes",
+    "netiqui"
+  ],
+  "author": "Christian CHIRUZA M.",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "whatsapp-web.js": "^1.26.0",
+    "qrcode-terminal": "^0.12.0",
+    "node-fetch": "^2.7.0"
+  }
 }
