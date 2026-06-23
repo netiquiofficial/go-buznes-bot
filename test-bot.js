@@ -40,6 +40,8 @@ async function extraireMetaDonnees(url) {
 
 console.log("⚡ Démarrage de Christian CM (Version Production GitHub)...");
 
+const path = require('path');
+
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
@@ -50,8 +52,8 @@ const client = new Client({
             '--disable-dev-shm-usage', 
             '--disable-gpu'
         ],
-        // 🚀 Chemin absolu exact affiché par tes logs de build Render
-        executablePath: '/opt/render/.cache/puppeteer/chrome/linux-146.0.7680.31/chrome-linux64/chrome'
+        // 🚀 Recherche dynamique dans le dossier .cache inclus dans le projet transféré
+        executablePath: path.join(__dirname, '.cache', 'puppeteer', 'chrome', 'linux-146.0.7680.31', 'chrome-linux64', 'chrome')
     }
 });
 
