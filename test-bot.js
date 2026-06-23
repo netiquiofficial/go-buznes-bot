@@ -40,7 +40,7 @@ async function extraireMetaDonnees(url) {
 
 console.log("⚡ Démarrage de Christian CM (Version Production GitHub)...");
 
-// 🌐 CONFIGURATION DE PRODUCTION AUTO-DÉTECTÉE POUR RENDER
+// 🌐 CONFIGURATION NETTOYÉE POUR RENDER
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
@@ -50,9 +50,8 @@ const client = new Client({
             '--disable-setuid-sandbox', 
             '--disable-dev-shm-usage', 
             '--disable-gpu'
-        ],
-        // 🚀 On force le script à pointer vers le dossier de cache de Render
-        executablePath: '/opt/render/.cache/puppeteer/chrome/linux-146.0.7680.31/chrome-linux64/chrome'
+        ]
+        // 🚀 On supprime complètement la ligne executablePath !
     }
 });
 
